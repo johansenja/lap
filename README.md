@@ -106,6 +106,8 @@ module Bank
 end
 ```
 
+From here, you now have some ruby code which you can [type check](https://github.com/soutaro/steep)!
+
 ## Installation
 
 Add this line to your application's Gemfile:
