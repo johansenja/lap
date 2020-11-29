@@ -161,6 +161,26 @@ procs|⚠️
 constants|⚠️
 interfaces|⚠️
 
+### Experimental:
+
+There is an experimental feature which allows you to specify some ruby logic *within* your rbs files
+for your methods. You specify it between `@!begin` and `@!end`, eg.:
+
+```ruby
+# take some moeny out of the customers account
+# @!begin
+#   @balance -= amount
+# @!end
+def withdraw(Float amount) -> Float
+```
+This would produce:
+
+```ruby
+# take some moeny out of the customers account
+def withdraw(amount)
+  @balance -= amount
+end
+```
 
 ## Development
 
