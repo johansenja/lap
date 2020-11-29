@@ -70,13 +70,20 @@ module Lapidary
       op = type.optional_positionals
       okw = type.optional_keywords
       return_type = return_type(type.return_type)
-      <<~METHOD
-    #{
-      "# #{m.comment.string}" if m.comment
-    }def #{"self." unless m.kind == :instance}#{m.name}#{args(rp, rkw, op, okw)}
-      #{return_type}
-    end
+      with_comment(m, <<~METHOD)
+        def #{"self." unless m.kind == :instance}#{m.name}#{args(rp, rkw, op, okw)}
+          #{return_type}
+        end
       METHOD
+    end
+
+    def with_comment(node, output)
+      if node.comment
+        comment = node.comment.string.lines.map { |l| "# #{l}" }.join
+        "#{comment}#{output}"
+      else
+        output
+      end
     end
 
     def render_class_decl(decl, indent_level = 0)
@@ -91,19 +98,19 @@ module Lapidary
                      when RBS::AST::Declarations::Module
                        render_module_decl(m, indent_level + 1)
                      when RBS::AST::Members::AttrReader
-                       indent("#{"# #{m.comment}\n" if m.comment}attr_reader :#{m.name}", @config[:indent] * (indent_level + 1))
+                       indent(with_comment(m, "attr_reader :#{m.name}"), @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::AttrWriter
-                       indent("#{"# #{m.comment}\n" if m.comment}attr_writer :#{m.name}", @config[:indent] * (indent_level + 1))
+                       indent(with_comment(m, "attr_writer :#{m.name}"), @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::AttrAccessor
-                       indent("#{"# #{m.comment}\n" if m.comment}attr_accessor :#{m.name}", @config[:indent] * (indent_level + 1))
+                       indent(with_comment(m, "attr_accessor :#{m.name}"), @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::Public
                        indent("public\n", @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::Private
                        indent("private\n", @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::Include
-                       indent("include #{m.name}", @config[:indent] * (indent_level + 1))
+                       indent(with_comment(m, "include #{m.name}"), @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::Extend
-                       indent("extend #{m.name}", @config[:indent] * (indent_level + 1))
+                       indent(with_comment(m, "extend #{m.name}"), @config[:indent] * (indent_level + 1))
                      when RBS::AST::Declarations::Alias
                        # no-op: not present in ruby
                      else
@@ -117,7 +124,9 @@ module Lapidary
       superclass = decl.super_class ? " < #{decl.super_class.name.name}" : ""
       self_indent = " " * (@config[:indent] * indent_level)
 
-      "#{self_indent}class #{decl.name.name}#{superclass}#{contents}#{self_indent if has_contents}end\n"
+      with_comment(
+        decl, "#{self_indent}class #{decl.name.name}#{superclass}#{contents}#{self_indent if has_contents}end\n"
+      )
     end
 
     def render_module_decl(decl, indent_level = 0)
@@ -141,7 +150,10 @@ module Lapidary
                  end
 
       self_indent = " " * (@config[:indent] * indent_level)
-      "#{self_indent}module #{decl.name.name}#{contents}#{self_indent if has_contents}end\n"
+      with_comment(
+        decl,
+        "#{self_indent}module #{decl.name.name}#{contents}#{self_indent if has_contents}end\n",
+      )
     end
 
     def indent(str, amount)

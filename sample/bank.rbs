@@ -1,9 +1,15 @@
+# The top level module for my feature/app
 module Bank
+  # This class is responsible for representing Accounts within the Bank
   class Account
+    # to 2 decimal places
     attr_reader interest_rate: Float
+    # each account has one customer
     attr_reader owner: Bank::Customer
 
+    # each account needs logic to handle different currencies
     include Currency
+    # Query methods to be able to look up different accounts
     extend Query
 
     # how much money the customer currently has (includes pending transactions). Return value to 2 DP
@@ -17,11 +23,14 @@ module Bank
     # can optionally specify when the transaction should take place
     def withdraw: (Float amount, ?when: date_or_dt) -> Float
 
-    # must filter results by specifying `to` and `from` params
+    # must filter results by specifying `to` and `from` params,
+    # to prevent the whole transaction history from being loaded!
     def transactions: (from: date_or_dt, to: date_or_dt) -> Array[Bank::Transaction]
 
     private
 
+    # TODO:
+    # this can probably live elsewhere in due course
     def send_confirmation_email: (String subject) -> void
   end
 end
