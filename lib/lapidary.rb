@@ -69,29 +69,51 @@ module Lapidary
       rkw = type.required_keywords
       op = type.optional_positionals
       okw = type.optional_keywords
-      return_type = return_type(type.return_type)
-      block = m.types.first.block
-      yld = if block
-              bt = block.type
-              a = args(
-                bt.required_positionals,
-                bt.required_keywords,
-                bt.optional_positionals,
-                bt.optional_keywords
-              )
-              "yield#{a}\n"
-            end
-      with_comment(m, <<~METHOD)
+      comment = m.comment
+      logic = ""
+      if comment
+        real_comment = []
+        logic = []
+        has_logic = false
+        comment.string.lines.each do |line|
+          if has_logic
+            break if line.lstrip.start_with? "@!end"
+
+            logic << line
+          elsif line.lstrip.start_with? "@!begin"
+            has_logic = true
+          else
+            real_comment << line
+          end
+        end
+        logic = logic.join
+        comment = real_comment.join
+      end
+      body = logic.length.positive? ? logic : begin
+        block = m.types.first.block
+        return_type = return_type(type.return_type)
+        yld = if block
+                bt = block.type
+                a = args(
+                  bt.required_positionals,
+                  bt.required_keywords,
+                  bt.optional_positionals,
+                  bt.optional_keywords
+                )
+                "yield#{a}\n"
+              end
+        "#{yld}#{return_type}"
+      end
+      with_comment(m, <<~METHOD, comment_string: comment)
         def #{"self." unless m.kind == :instance}#{m.name}#{args(rp, rkw, op, okw)}
-          #{yld}#{return_type}
+          #{body}
         end
       METHOD
     end
 
-    def with_comment(node, output)
-      if node.comment
-        comment = node.comment.string.lines.map { |l| "# #{l}" }.join
-        "#{comment}#{output}"
+    def with_comment(node, output, comment_string: nil)
+      if (comment = comment_string || node.comment&.string)
+        "#{comment.lines.map { |l| "# #{l}" }.join}#{output}"
       else
         output
       end

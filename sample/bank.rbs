@@ -6,14 +6,13 @@ module Bank
     attr_reader interest_rate: Float
     # each account has one customer
     attr_reader owner: Bank::Customer
+    # how much money in the account
+    attr_reader balance: Float
 
     # each account needs logic to handle different currencies
     include Currency
     # Query methods to be able to look up different accounts
     extend Query
-
-    # how much money the customer currently has (includes pending transactions). Return value to 2 DP
-    def balance: () -> Float
 
     type date_or_dt = Date | DateTime
 
@@ -21,6 +20,9 @@ module Bank
     def deposit: (Float amount, ?when: date_or_dt) -> Float
 
     # can optionally specify when the transaction should take place
+    # @!begin
+    #   @balance += amount
+    # @!end
     def withdraw: (Float amount, ?when: date_or_dt) -> Float
 
     # must filter results by specifying `to` and `from` params,
