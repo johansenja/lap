@@ -3,6 +3,7 @@
 require "rbs"
 require "pathname"
 require "lapidary/version"
+require "pry-byebug"
 
 module Lapidary
   class Output
@@ -56,7 +57,7 @@ module Lapidary
           rp.map { |pos| pos.name || pos.type.name.name.downcase },
           op.map { |pos| "#{pos.name || pos.type.name.name.downcase} = #{CLASS_TO_LITERAL[pos.type.name.name]}" },
           rkw.map { |name, _| "#{name}:" },
-          okw.map { |name, t| "#{name}: #{CLASS_TO_LITERAL[t.type.name.name] || t.type.name || nil}" },
+          okw.map { |name, t| "#{name}: #{CLASS_TO_LITERAL[t.type.name.name]}" },
         ].reject(&:empty?).flatten.join(", ")
         "(#{contents})"
       end
@@ -89,11 +90,23 @@ module Lapidary
                        render_class_decl(m, indent_level + 1)
                      when RBS::AST::Declarations::Module
                        render_module_decl(m, indent_level + 1)
+                     when RBS::AST::Members::AttrReader
+                       indent("#{"# #{m.comment}\n" if m.comment}attr_reader :#{m.name}", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::AttrWriter
+                       indent("#{"# #{m.comment}\n" if m.comment}attr_writer :#{m.name}", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::AttrAccessor
+                       indent("#{"# #{m.comment}\n" if m.comment}attr_accessor :#{m.name}", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::Public
+                       indent("public\n", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::Private
+                       indent("private\n", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Declarations::Alias
+                       # no-op: not present in ruby
                      else
-                       "TODO: #{m}"
+                       warn "TODO: #{m}"
                      end
                    end
-                   "\n#{members.join("\n")}"
+                   "\n#{members.compact.join("\n")}"
                  else
                    "; "
                  end
@@ -115,7 +128,7 @@ module Lapidary
                      when RBS::AST::Declarations::Module
                        render_module_decl(m, indent_level + 1)
                      else
-                       "TODO: #{m}"
+                       warn "TODO: #{m}"
                      end
                    end
                    "\n#{members.join("\n")}"

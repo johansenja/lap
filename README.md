@@ -20,15 +20,15 @@ module Bank
     attr_reader interest_rate: Float
     attr_reader owner: Bank::Customer
     attr_reader balance: Float
-    
+
     type date_or_dt = Date | DateTime
-    
+
     # can optionally specify when the transaction should take place
     def deposit: (Float amount, ?when: date_or_dt) -> Float
-    
+
     # can optionally specify when the transaction should take place
     def withdraw: (Float amount, ?when: date_or_dt) -> Float
-    
+
     # must filter results by specifying `to` and `from` params
     def transactions: (from: date_or_dt, to: date_or_dt) -> Array[Bank::Transaction]
   end
@@ -48,7 +48,7 @@ module Bank
     attr_reader :interest_rate
     attr_reader :owner
     attr_reader :balance
-    
+
     def initialize(owner, interest_rate, balance)
         @owner = owner
         @interest_rate = interest_rate
@@ -81,7 +81,7 @@ module Bank
     attr_reader :interest_rate
     attr_reader :owner
     attr_reader :balance
-    
+
     def initialize(owner, interest_rate, balance)
         @owner = owner
         @interest_rate = interest_rate
@@ -140,12 +140,12 @@ optional positional arguments|✅
 required keyword arguments|✅
 optional keyword arguments|✅
 method comments|✅
-access modifiers|⚠️
+access modifiers|✅
+attr_reader|✅
+attr_writer|✅
+attr_accessor|✅
 methods with blocks|⚠️
 method overloading|⚠️
-attr_reader|⚠️
-attr_writer|⚠️
-attr_accessor|⚠️
 include|⚠️
 extend|⚠️
 procs|⚠️

@@ -1,0 +1,24 @@
+module Bank
+  class Account
+    attr_reader interest_rate: Float
+    attr_reader owner: Bank::Customer
+
+    # how much money the customer currently has (includes pending transactions). Return value to 2 DP
+    def balance: () -> Float
+
+    type date_or_dt = Date | DateTime
+
+    # can optionally specify when the transaction should take place
+    def deposit: (Float amount, ?when: date_or_dt) -> Float
+
+    # can optionally specify when the transaction should take place
+    def withdraw: (Float amount, ?when: date_or_dt) -> Float
+
+    # must filter results by specifying `to` and `from` params
+    def transactions: (from: date_or_dt, to: date_or_dt) -> Array[Bank::Transaction]
+
+    private
+
+    def send_confirmation_email: (String subject) -> void
+  end
+end
