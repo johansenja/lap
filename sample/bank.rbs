@@ -3,6 +3,9 @@ module Bank
     attr_reader interest_rate: Float
     attr_reader owner: Bank::Customer
 
+    include Currency
+    extend Query
+
     # how much money the customer currently has (includes pending transactions). Return value to 2 DP
     def balance: () -> Float
 

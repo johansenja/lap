@@ -100,6 +100,10 @@ module Lapidary
                        indent("public\n", @config[:indent] * (indent_level + 1))
                      when RBS::AST::Members::Private
                        indent("private\n", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::Include
+                       indent("include #{m.name}", @config[:indent] * (indent_level + 1))
+                     when RBS::AST::Members::Extend
+                       indent("extend #{m.name}", @config[:indent] * (indent_level + 1))
                      when RBS::AST::Declarations::Alias
                        # no-op: not present in ruby
                      else

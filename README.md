@@ -144,10 +144,10 @@ access modifiers|✅
 attr_reader|✅
 attr_writer|✅
 attr_accessor|✅
+include|✅
+extend|✅
 methods with blocks|⚠️
 method overloading|⚠️
-include|⚠️
-extend|⚠️
 procs|⚠️
 constants|⚠️
 interfaces|⚠️
