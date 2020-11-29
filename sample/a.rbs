@@ -1,0 +1,20 @@
+class A < String
+  def self.a: () -> untyped
+
+  def self.b: (String arg1) -> Integer
+
+  attr_reader foo: String
+
+  include Kernel
+
+  def length: () -> Integer
+
+  private def c: (?arg: Array) -> void
+
+  class D
+  end
+
+  module E
+    def f: (?Hash options) -> bool
+  end
+end

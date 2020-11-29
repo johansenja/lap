@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "cutter"
+
+pn = ARGV[0]
+
+raise "no path specified" unless pn
+
+Cutter::Output.new(pn).render
