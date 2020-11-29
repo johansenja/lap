@@ -12,7 +12,7 @@ $ lap sig/file.rbs > lib/file.rb # output into a file
 
 ## Example
 
-0. Write the blueprints for your project:
+0. Plan your project/module/class by writing some blueprints:
 ```ruby
 # sig/lib/bank/account.rbs
 module Bank
