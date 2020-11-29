@@ -1,4 +1,4 @@
-module Lapidary
+module Lap
   module Helpers
     CLASS_TO_LITERAL = {
       String: '""',
@@ -18,8 +18,8 @@ module Lapidary
       end
     end
 
-    def with_comment(node, output, comment_string: nil)
-      if (comment = comment_string || node.comment&.string)
+    def with_comment(node, output)
+      if (comment = node.comment&.string)
         "#{comment.lines.map { |l| "# #{l}" }.join}#{output}"
       else
         output

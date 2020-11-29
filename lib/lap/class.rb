@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lapidary
+module Lap
   class Class
     include Helpers
 
@@ -12,7 +12,7 @@ module Lapidary
 
     def render
       superclass = @node.super_class ? " < #{@node.super_class.name.name}" : ""
-      self_indent = " " * (Lapidary::Config[:indent] * @indent_level)
+      self_indent = " " * (Lap::Config[:indent] * @indent_level)
       comment = get_comment(@node)
       "#{comment}#{self_indent}class #{@node.name.name}#{superclass}#{contents}#{self_indent if @has_contents}end\n"
     end
@@ -22,15 +22,15 @@ module Lapidary
     def contents
       @contents ||= begin
         if @has_contents
-          member_indent = Lapidary::Config[:indent] * (@indent_level + 1)
+          member_indent = Lap::Config[:indent] * (@indent_level + 1)
           members = @node.members.map do |m|
             case m
             when RBS::AST::Members::MethodDefinition
-              Lapidary::Method.new(m, @indent_level + 1).render
+              Lap::Method.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Class
               self.class.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Module
-              Lapidary::Module.new(m, @indent_level + 1).render
+              Lap::Module.new(m, @indent_level + 1).render
             when RBS::AST::Members::AttrReader
               with_comment(m, "attr_reader :#{m.name}").indent(member_indent)
             when RBS::AST::Members::AttrWriter

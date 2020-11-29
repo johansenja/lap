@@ -1,7 +1,9 @@
-# Lapidary
+# Lap
 
 Don't write your code, *and* rbs types! Write the rbs types first, then generate a template to
 fill in with business logic.
+
+A `lap`idary (or `lap`idist) is someone who cuts, polishes, or engraves precious stones.
 
 ## Usage
 
@@ -190,7 +192,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/johansenja/lapidary.
+Bug reports and pull requests are welcome on GitHub at https://github.com/johansenja/lap.
 
 
 ## License

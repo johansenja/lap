@@ -2,15 +2,15 @@
 
 require "rbs"
 require "pathname"
-require "lapidary/version"
-require "lapidary/helpers"
-require "lapidary/class"
-require "lapidary/method"
-require "lapidary/module"
+require "lap/version"
+require "lap/helpers"
+require "lap/class"
+require "lap/method"
+require "lap/module"
 require "pry-byebug"
 require "core_ext/string"
 
-module Lapidary
+module Lap
   CONFIG_FILENAME = ".lap.yml"
   DEFAULT_CONFIG = {
     indent: 2
@@ -30,9 +30,9 @@ module Lapidary
       output = @env.declarations.map do |decl|
         case decl
         when RBS::AST::Declarations::Class
-          Lapidary::Class.new(decl).render
+          Lap::Class.new(decl).render
         when RBS::AST::Declarations::Module
-          Lapidary::Module.new(decl).render
+          Lap::Module.new(decl).render
         else
           "TODO: #{decl}"
         end

@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "lapidary"
+require "lap"
 
 pn = ARGV[0]
 
 raise "no path specified" unless pn
 
-Lapidary::Output.new(pn).render
+Lap::Output.new(pn).render

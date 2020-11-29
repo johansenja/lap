@@ -1,8 +1,8 @@
-require_relative 'lib/lapidary/version'
+require_relative 'lib/lap/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "lapidary"
-  spec.version       = Lapidary::VERSION
+  spec.name          = "lap"
+  spec.version       = Lap::VERSION
   spec.authors       = ["Joseph Johansen"]
   spec.email         = ["joe@stotles.com"]
 

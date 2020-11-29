@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lapidary
+module Lap
   class Module
     include Helpers
 
@@ -11,7 +11,7 @@ module Lapidary
     end
 
     def render
-      self_indent = " " * (Lapidary::Config[:indent] * @indent_level)
+      self_indent = " " * (Lap::Config[:indent] * @indent_level)
       comment = get_comment(@node)
       "#{comment}#{self_indent}module #{@node.name.name}#{contents}#{self_indent if @has_contents}end\n"
     end
@@ -24,9 +24,9 @@ module Lapidary
           members = @node.members.map do |m|
             case m
             when RBS::AST::Members::MethodDefinition
-              Lapidary::Method.new(m, @indent_level + 1).render
+              Lap::Method.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Class
-              Lapidary::Class.new(m, @indent_level + 1).render
+              Lap::Class.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Module
               self.class.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Alias

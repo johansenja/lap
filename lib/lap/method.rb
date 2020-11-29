@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lapidary
+module Lap
   class Method
     include Helpers
 
@@ -16,7 +16,7 @@ module Lapidary
           #{body}
         end
       METHOD
-      result.indent(Lapidary::Config[:indent] * @indent_level)
+      result.indent(Lap::Config[:indent] * @indent_level)
     end
 
     private
