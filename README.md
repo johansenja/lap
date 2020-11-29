@@ -124,6 +124,15 @@ Or install it yourself as:
 
     $ gem install cutter
 
+## Configuration
+
+You can specify preferences in a `.lap.yml` file in your project directory. Example
+
+```yml
+indent: 4 # default is 2
+# this is it for now, more to come
+```
+
 ## Coverage
 
 Currently not every feature of RBS is supported - yet! (contributions
