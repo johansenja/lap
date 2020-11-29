@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Don't write your code, and rbs types! Write the rbs types first, then generate a bolierplate to fill in with business logic."
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
+  spec.homepage      = "https://github.com/johansenja/lap"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
