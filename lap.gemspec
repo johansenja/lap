@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["joe@stotles.com"]
 
   spec.summary       = %q{Generate ruby from rbs blueprints}
-  spec.description   = "Don't write your code, and rbs types! Write the rbs types first, then generate a bolierplate to fill in with business logic."
+  spec.description   = "Don't write your code, and rbs types! Write the rbs types first, then generate a template to fill in with business logic."
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
   spec.homepage      = "https://github.com/johansenja/lap"
