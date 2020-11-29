@@ -70,9 +70,20 @@ module Lapidary
       op = type.optional_positionals
       okw = type.optional_keywords
       return_type = return_type(type.return_type)
+      block = m.types.first.block
+      yld = if block
+              bt = block.type
+              a = args(
+                bt.required_positionals,
+                bt.required_keywords,
+                bt.optional_positionals,
+                bt.optional_keywords
+              )
+              "yield#{a}\n"
+            end
       with_comment(m, <<~METHOD)
         def #{"self." unless m.kind == :instance}#{m.name}#{args(rp, rkw, op, okw)}
-          #{return_type}
+          #{yld}#{return_type}
         end
       METHOD
     end

@@ -27,6 +27,8 @@ module Bank
     # to prevent the whole transaction history from being loaded!
     def transactions: (from: date_or_dt, to: date_or_dt) -> Array[Bank::Transaction]
 
+    def with_block: () {(String arg1) -> String } -> void
+
     private
 
     # TODO:

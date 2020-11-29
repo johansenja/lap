@@ -146,7 +146,7 @@ attr_writer|✅
 attr_accessor|✅
 include|✅
 extend|✅
-methods with blocks|⚠️
+methods with blocks|✅
 method overloading|⚠️
 procs|⚠️
 constants|⚠️
