@@ -6,11 +6,17 @@ require "lapidary/version"
 require "pry-byebug"
 
 module Lapidary
+  CONFIG_FILENAME = ".lap.yml"
+  DEFAULT_CONFIG = {
+    indent: 2
+  }
+
   class Output
     def initialize(pathname)
-      @pathname, @config = pathname, {
-        indent: 2
-      }
+      @pathname = pathname
+      fp = File.join(File.dirname(__FILE__), "..", CONFIG_FILENAME)
+      yml_config = Pathname(fp).exist? ? YAML.safe_load(File.read(fp)) : {}
+      @config = DEFAULT_CONFIG.merge(yml_config.transform_keys(&:to_sym))
 
       loader = RBS::EnvironmentLoader.new(core_root: nil) # don't pollute the env with ruby stdlib
       loader.add(path: Pathname(pathname))
