@@ -1,3 +1,3 @@
-module Cutter
+module Lapidary
   VERSION = "0.1.0"
 end

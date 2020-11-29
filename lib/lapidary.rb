@@ -2,9 +2,9 @@
 
 require "rbs"
 require "pathname"
-require "cutter/version"
+require "lapidary/version"
 
-module Cutter
+module Lapidary
   class Output
     def initialize(pathname)
       @pathname, @config = pathname, {

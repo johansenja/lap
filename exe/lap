@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "cutter"
+require "lapidary"
 
 pn = ARGV[0]
 
 raise "no path specified" unless pn
 
-Cutter::Output.new(pn).render
+Lapidary::Output.new(pn).render

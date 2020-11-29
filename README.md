@@ -1,8 +1,11 @@
-# Cutter
+# Lapidary
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cutter`. To experiment with that code, run `bin/console` for an interactive prompt.
+Don't write your code, *and* rbs types! Write the rbs types first, then generate a template to
+fill in with business logic.
 
-TODO: Delete this and the text above, and describe your gem
+## Example
+
+
 
 ## Installation
 
@@ -22,7 +25,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Output the b
+```sh
+$ lap sig/file.rbs # outputs to stdout
+$ lap sig/file.rbs > lib/file.rb # output into a file
+```
+
+## Coverage
+
+Currently not every feature of RBS is supported, but the aim is to increase it (contributions
+welcome!)
 
 ## Development
 
@@ -32,7 +44,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cutter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/johansenja/lapidary.
 
 
 ## License

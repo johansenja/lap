@@ -1,6 +1,6 @@
-RSpec.describe Cutter do
+RSpec.describe Lapidary do
   it "has a version number" do
-    expect(Cutter::VERSION).not_to be nil
+    expect(Lapidary::VERSION).not_to be nil
   end
 
   it "does something useful" do

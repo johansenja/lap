@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "cutter"
+require "lapidary"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
