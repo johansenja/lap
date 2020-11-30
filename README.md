@@ -51,12 +51,6 @@ module Bank
     attr_reader :owner
     attr_reader :balance
 
-    def initialize(owner, interest_rate, balance)
-        @owner = owner
-        @interest_rate = interest_rate
-        @balance = balance
-    end
-
     # can optionally specify when the transaction should take place
     def deposit(amount, when: nil)
       # TODO: return Float
@@ -110,12 +104,33 @@ end
 
 From here, you now have some ruby code which you can [type check](https://github.com/soutaro/steep)!
 
+### Experimental:
+
+There is an experimental feature which allows you to specify some ruby logic *within* your rbs files
+for your methods. You specify it between `@!begin` and `@!end`, eg.:
+
+```ruby
+# take some moeny out of the customers account
+# @!begin
+#   @balance -= amount
+# @!end
+def withdraw(Float amount) -> Float
+```
+This would produce:
+
+```ruby
+# take some moeny out of the customers account
+def withdraw(amount)
+  @balance -= amount
+end
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'cutter'
+gem 'lap'
 ```
 
 And then execute:
@@ -124,7 +139,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install cutter
+    $ gem install lap
 
 ## Configuration
 
@@ -162,27 +177,6 @@ method overloading|⚠️
 procs|⚠️
 constants|⚠️
 interfaces|⚠️
-
-### Experimental:
-
-There is an experimental feature which allows you to specify some ruby logic *within* your rbs files
-for your methods. You specify it between `@!begin` and `@!end`, eg.:
-
-```ruby
-# take some moeny out of the customers account
-# @!begin
-#   @balance -= amount
-# @!end
-def withdraw(Float amount) -> Float
-```
-This would produce:
-
-```ruby
-# take some moeny out of the customers account
-def withdraw(amount)
-  @balance -= amount
-end
-```
 
 ## Development
 
