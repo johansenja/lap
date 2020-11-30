@@ -2,19 +2,21 @@
 
 require "rbs"
 require "pathname"
+require "yaml"
 require "lap/version"
 require "lap/helpers"
 require "lap/class"
 require "lap/method"
 require "lap/module"
-require "pry-byebug"
+require "lap/constant"
 require "core_ext/string"
 
 module Lap
   CONFIG_FILENAME = ".lap.yml"
   DEFAULT_CONFIG = {
     indent: 2,
-    frozen_string_literals: true
+    frozen_string_literals: true,
+    preferred_line_length: 100
   }
   FROZEN_STRING_COMMENT = "# frozen_string_literal: true\n\n"
   fp = File.join(File.dirname(__FILE__), "..", CONFIG_FILENAME)

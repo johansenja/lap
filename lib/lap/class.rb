@@ -45,6 +45,8 @@ module Lap
               with_comment(m, "include #{m.name}").indent(member_indent)
             when RBS::AST::Members::Extend
               with_comment(m, "extend #{m.name}").indent(member_indent)
+            when RBS::AST::Declarations::Constant
+              Lap::Constant.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Alias
               # no-op: not present in ruby
             else

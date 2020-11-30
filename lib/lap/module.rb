@@ -29,6 +29,8 @@ module Lap
               Lap::Class.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Module
               self.class.new(m, @indent_level + 1).render
+            when RBS::AST::Declarations::Constant
+              Lap::Constant.new(m, @indent_level + 1).render
             when RBS::AST::Declarations::Alias
               # no-op: not present in ruby
             else
