@@ -1,0 +1,53 @@
+module Lap
+  module Helpers
+    CLASS_TO_LITERAL: {
+      String: '""',
+      Array: '[]',
+      Hash: "{}"
+    }
+
+    # @!begin
+    #   if [rp, rkw, op, okw].any? { |arg| arg.length.positive? }
+    #     contents = [
+    #       rp.map { |pos| pos.name || pos.type.name.name.downcase },
+    #       op.map { |pos| "#{pos.name || pos.type.name.name.downcase} = #{CLASS_TO_LITERAL[pos.type.name.name]}" },
+    #       rkw.map { |name, _| "#{name}:" },
+    #       okw.map { |name, t| "#{name}: #{CLASS_TO_LITERAL[t.type.name.name]}" },
+    #     ].reject(&:empty?).flatten.join(", ")
+    #     "(#{contents})"
+    #   end
+    # @!end
+    def args: (
+      Array[RBS::Types::Function::Param] rp,
+      Hash[Symbol, RBS::Types::Function::Param] rkw,
+      Array[RBS::Types::Function::Param] op,
+      Hash[Symbol, RBS::Types::Function::Param] okw
+    ) -> String
+
+    # @!begin
+    #   if (comment = node.comment&.string)
+    #     "#{comment.lines.map { |l| "# #{l}" }.join}#{output}"
+    #   else
+    #     output
+    #   end
+    # @!end
+    def with_comment: (RBS::AST node, String output) -> String
+
+    # @!begin
+    #   return nil unless node.comment
+
+    #   lines = node.comment
+    #               .string
+    #               .lines
+    #   comment = []
+    #   lines.each do |l|
+    #     break if l.start_with? "@!begin"
+
+    #     comment << "# #{l}"
+    #   end
+
+    #   comment.join
+    # @!end
+    def get_comment: (RBS::AST node) -> String
+  end
+end

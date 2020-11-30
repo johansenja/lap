@@ -1,0 +1,46 @@
+module Lap
+  class Module
+    include Helpers
+
+    # @!begin
+    #   @node = node
+    #   @indent_level = indent_level
+    #   @has_contents = !@node.members.empty?
+    # @!end
+    def initialize: (RBS::AST::Declarations::Module node, ?Integer indent_level) -> void
+
+    # @!begin
+    #   self_indent = " " * (Lap::Config[:indent] * @indent_level)
+    #   comment = get_comment(@node)
+    #   "#{comment}#{self_indent}module #{@node.name.name}#{contents}#{self_indent if @has_contents}end\n"
+    # @!end
+    def render: () -> String
+
+    private
+
+    # @!begin
+    #   @contents ||= begin
+    #     if @has_contents
+    #       members = @node.members.map do |m|
+    #         case m
+    #         when RBS::AST::Members::MethodDefinition
+    #           Lap::Method.new(m, @indent_level + 1).render
+    #         when RBS::AST::Declarations::Class
+    #           Lap::Class.new(m, @indent_level + 1).render
+    #         when RBS::AST::Declarations::Module
+    #           self.class.new(m, @indent_level + 1).render
+    #         when RBS::AST::Declarations::Alias
+    #           # no-op: not present in ruby
+    #         else
+    #           warn "Unsupported member for modules: #{m}"
+    #         end
+    #       end
+    #       "\n#{members.join("\n")}"
+    #     else
+    #       "; "
+    #     end
+    #   end
+    # @!end
+    def contents: () -> String
+  end
+end
