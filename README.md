@@ -148,8 +148,7 @@ You can specify preferences in a `.lap.yml` file in your project directory. Exam
 ```yml
 indent: 4 # default is 2
 frozen_string_literals: false # add 'frozen_string_literal: true' to top of file; default is true
-# preferred line length in characters; default is 100. Note "preferred" -
-not always a guarantee
+# preferred line length in characters; default is 100. Note "preferred" - not always a guarantee
 preferred_line_length: 80
 ```
 
