@@ -23,6 +23,8 @@ module Bank
     attr_reader owner: Bank::Customer
     attr_reader balance: Float
 
+    def initialize: (Bank::Customer owner, Float interest_rate, ?Float balance) -> void
+
     type date_or_dt = Date | DateTime
 
     # can optionally specify when the transaction should take place
@@ -51,6 +53,10 @@ module Bank
     attr_reader :owner
     attr_reader :balance
 
+    def initialize(owner, interest_rate, balance = nil)
+      # returns void
+    end
+
     # can optionally specify when the transaction should take place
     def deposit(amount, when: nil)
       # TODO: return Float
@@ -78,7 +84,7 @@ module Bank
     attr_reader :owner
     attr_reader :balance
 
-    def initialize(owner, interest_rate, balance)
+    def initialize(owner, interest_rate, balance = 0)
         @owner = owner
         @interest_rate = interest_rate
         @balance = balance
