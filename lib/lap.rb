@@ -13,8 +13,10 @@ require "core_ext/string"
 module Lap
   CONFIG_FILENAME = ".lap.yml"
   DEFAULT_CONFIG = {
-    indent: 2
+    indent: 2,
+    frozen_string_literals: true
   }
+  FROZEN_STRING_COMMENT = "# frozen_string_literal: true\n"
   fp = File.join(File.dirname(__FILE__), "..", CONFIG_FILENAME)
   yml_config = Pathname(fp).exist? ? YAML.safe_load(File.read(fp)) : {}
   Config = DEFAULT_CONFIG.merge(yml_config.transform_keys(&:to_sym))
@@ -34,10 +36,12 @@ module Lap
         when RBS::AST::Declarations::Module
           Lap::Module.new(decl).render
         else
-          "TODO: #{decl}"
+          warn "TODO: #{decl} not implemented yet"
+          nil
         end
       end
 
+      puts FROZEN_STRING_COMMENT if Lap::Config[:frozen_string_literals]
       puts output.join("\n")
     end
   end
