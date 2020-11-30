@@ -10,7 +10,7 @@ module Lap
       if [rp, rkw, op, okw].any? { |arg| arg.length.positive? }
         contents = [
           rp.map { |pos| pos.name || pos.type.name.name.downcase },
-          op.map { |pos| "#{pos.name || pos.type.name.name.downcase} = #{CLASS_TO_LITERAL[pos.type.name.name]}" },
+          op.map { |pos| "#{pos.name || pos.type.name.name.downcase} = #{CLASS_TO_LITERAL[pos.type.name.name] || "nil"}" },
           rkw.map { |name, _| "#{name}:" },
           okw.map { |name, t| "#{name}: #{CLASS_TO_LITERAL[t.type.name.name]}" },
         ].reject(&:empty?).flatten.join(", ")

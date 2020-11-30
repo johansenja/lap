@@ -16,7 +16,7 @@ module Lap
     indent: 2,
     frozen_string_literals: true
   }
-  FROZEN_STRING_COMMENT = "# frozen_string_literal: true\n"
+  FROZEN_STRING_COMMENT = "# frozen_string_literal: true\n\n"
   fp = File.join(File.dirname(__FILE__), "..", CONFIG_FILENAME)
   yml_config = Pathname(fp).exist? ? YAML.safe_load(File.read(fp)) : {}
   Config = DEFAULT_CONFIG.merge(yml_config.transform_keys(&:to_sym))
