@@ -1,5 +1,6 @@
-extension String
-  def indent(amount)
-    gsub(/^/, " " * amount)
-  end
+class String
+  # @!begin
+  #  gsub(/^/, " " * amount)
+  # @!end
+  def indent: (Integer amount) -> String
 end
