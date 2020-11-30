@@ -8,7 +8,7 @@ module Lap
     end
 
     def render
-      "#{name} = #{value}".indent(Lap::Config[:indent] * @indent_level)
+      "#{name} = #{value}\n".indent(Lap::Config[:indent] * @indent_level)
     end
 
     private
@@ -27,6 +27,11 @@ module Lap
                     " #{record_contents(fields)} "
                   end
         "{#{content}}"
+      when RBS::Types::Literal
+        @node.type.literal
+      else
+        warn "TODO: #{@node.type} not supported yet"
+        ""
       end
     end
 
