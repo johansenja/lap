@@ -35,17 +35,17 @@ module Lap
 
     # @!begin
     #   return nil unless node.comment
-
+    #
     #   lines = node.comment
     #               .string
     #               .lines
     #   comment = []
     #   lines.each do |l|
     #     break if l.start_with? "@!begin"
-
+    #
     #     comment << "# #{l}"
     #   end
-
+    #
     #   comment.join
     # @!end
     def get_comment: (RBS::AST node) -> String
