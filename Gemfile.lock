@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lap (0.2)
+    lap (0.2.1)
       rbs
 
 GEM
