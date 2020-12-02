@@ -31,7 +31,7 @@ module Lap
     #     "# TODO: return #{t.name.name}"
     #   end
     # @!end
-    def return_type: (RBS::Types type) -> String
+    def return_type: (RBS::Types::t t) -> String
 
     # @!begin
     #   @arguments ||= begin
@@ -43,7 +43,7 @@ module Lap
     #     args(rp, rkw, op, okw)
     #   end
     # @!end
-    def arguments: () -> String
+    def arguments: () -> (String | nil)
 
     # @!begin
     #   @body ||= begin

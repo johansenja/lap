@@ -44,7 +44,9 @@ module Lap
       end
 
       puts FROZEN_STRING_COMMENT if Lap::Config[:frozen_string_literals]
-      puts output.join("\n")
+      out = output.join("\n")
+      puts out
+      out
     end
   end
 end

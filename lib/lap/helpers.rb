@@ -8,11 +8,36 @@ module Lap
 
     def args(rp, rkw, op, okw)
       if [rp, rkw, op, okw].any? { |arg| arg.length.positive? }
+        arg_counter = 1
         contents = [
-          rp.map { |pos| pos.name || pos.type.name.name.downcase },
-          op.map { |pos| "#{pos.name || pos.type.name.name.downcase} = #{CLASS_TO_LITERAL[pos.type.name.name] || "nil"}" },
+          rp.map do |pos|
+            arg_counter += 1
+            pos.name || begin
+              if pos.type.respond_to?(:name)
+                pos.type.name.name.downcase
+              else
+                "arg#{arg_counter}"
+              end
+            end
+          end,
+          op.map do |pos|
+            name = nil
+            value = "nil"
+            if pos.name
+              name = pos.name
+            elsif pos.type.respond_to?(:name)
+              name = pos.type.name.name.downcase
+              value = CLASS_TO_LITERAL[pos.type.name.name]
+            else
+              name = "arg#{arg_counter}"
+            end
+            "#{name} = #{value}"
+          end,
           rkw.map { |name, _| "#{name}:" },
-          okw.map { |name, t| "#{name}: #{CLASS_TO_LITERAL[t.type.name.name]}" },
+          okw.map do |name, tipe|
+            value = tipe.type.respond_to?(:name) ? CLASS_TO_LITERAL[tipe.type.name.name] : "nil"
+            "#{name}: #{value}"
+          end,
         ].reject(&:empty?).flatten.join(", ")
         "(#{contents})"
       end
@@ -20,7 +45,7 @@ module Lap
 
     def with_comment(node, output)
       if (comment = node.comment&.string)
-        "#{comment.lines.map { |l| "# #{l}" }.join}#{output}"
+        "#{comment.lines.map { |line| "# #{line}" }.join}#{output}"
       else
         output
       end
@@ -33,10 +58,10 @@ module Lap
                   .string
                   .lines
       comment = []
-      lines.each do |l|
-        break if l.start_with? "@!begin"
+      lines.each do |line|
+        break if line.start_with? "@!begin"
 
-        comment << "# #{l}"
+        comment << "# #{line}"
       end
 
       comment.join

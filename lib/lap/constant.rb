@@ -8,7 +8,7 @@ module Lap
     end
 
     def render
-      "#{name} = #{value}\n".indent(Lap::Config[:indent] * @indent_level)
+      "#{name} = #{value}\n".indent((Lap::Config[:indent] * @indent_level).to_i)
     end
 
     private

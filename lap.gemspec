@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.add_runtime_dependency "rbs"
   spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "steep"
 end

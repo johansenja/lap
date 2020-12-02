@@ -1,0 +1,15 @@
+module Lap
+  class Constant
+    def initialize: (RBS::AST::Declarations::Constant node, Integer indent_level) -> void
+
+    def render: () -> String
+
+    private
+
+    def name: () -> String
+
+    def value: () -> String
+
+    def record_contents: (Hash[Symbol, untyped] hsh) -> String
+  end
+end

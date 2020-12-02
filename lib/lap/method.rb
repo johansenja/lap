@@ -16,19 +16,19 @@ module Lap
           #{body}
         end
       METHOD
-      result.indent(Lap::Config[:indent] * @indent_level)
+      result.indent((Lap::Config[:indent] * @indent_level).to_i)
     end
 
     private
 
-    def return_type(t)
-      case t
+    def return_type(tipe)
+      case tipe
       when RBS::Types::Literal
-        t
-      when ->(t) { t.class.to_s.start_with? "RBS::Types::Bases" }
-        "# returns #{t}"
+        tipe.inspect
+      when ->(tp) { tp.class.to_s.start_with? "RBS::Types::Bases" }
+        "# returns #{tipe}"
       else
-        "# TODO: return #{t.name.name}"
+        "# TODO: return #{tipe.name.name}"
       end
     end
 
@@ -48,7 +48,6 @@ module Lap
         comment = @node.comment
         logic = ""
         if comment
-          real_comment = []
           logic = []
           has_logic = false
           comment.string.lines.each do |line|
@@ -58,12 +57,9 @@ module Lap
               logic << line
             elsif line.lstrip.start_with? "@!begin"
               has_logic = true
-            else
-              real_comment << line
             end
           end
           logic = logic.join
-          comment = real_comment.join
         end
         if logic.length.positive?
           logic

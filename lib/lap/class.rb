@@ -22,35 +22,35 @@ module Lap
     def contents
       @contents ||= begin
         if @has_contents
-          member_indent = Lap::Config[:indent] * (@indent_level + 1)
-          members = @node.members.map do |m|
-            case m
+          member_indent = (Lap::Config[:indent] * (@indent_level + 1)).to_i
+          members = @node.members.map do |member|
+            case member
             when RBS::AST::Members::MethodDefinition
-              Lap::Method.new(m, @indent_level + 1).render
+              Lap::Method.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Class
-              self.class.new(m, @indent_level + 1).render
+              self.class.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Module
-              Lap::Module.new(m, @indent_level + 1).render
+              Lap::Module.new(member, @indent_level + 1).render
             when RBS::AST::Members::AttrReader
-              with_comment(m, "attr_reader :#{m.name}").indent(member_indent)
+              with_comment(member, "attr_reader :#{member.name}").indent(member_indent)
             when RBS::AST::Members::AttrWriter
-              with_comment(m, "attr_writer :#{m.name}").indent(member_indent)
+              with_comment(member, "attr_writer :#{member.name}").indent(member_indent)
             when RBS::AST::Members::AttrAccessor
-              with_comment(m, "attr_accessor :#{m.name}").indent(member_indent)
+              with_comment(member, "attr_accessor :#{member.name}").indent(member_indent)
             when RBS::AST::Members::Public
               "public\n".indent(member_indent)
             when RBS::AST::Members::Private
               "private\n".indent(member_indent)
             when RBS::AST::Members::Include
-              with_comment(m, "include #{m.name}").indent(member_indent)
+              with_comment(member, "include #{member.name}").indent(member_indent)
             when RBS::AST::Members::Extend
-              with_comment(m, "extend #{m.name}").indent(member_indent)
+              with_comment(member, "extend #{member.name}").indent(member_indent)
             when RBS::AST::Declarations::Constant
-              Lap::Constant.new(m, @indent_level + 1).render
+              Lap::Constant.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Alias
               # no-op: not present in ruby
             else
-              warn "Unsupported member for classes: #{m}"
+              warn "Unsupported member for classes: #{member}"
             end
           end
           "\n#{members.compact.join("\n")}"

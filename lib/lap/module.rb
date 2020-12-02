@@ -21,20 +21,20 @@ module Lap
     def contents
       @contents ||= begin
         if @has_contents
-          members = @node.members.map do |m|
-            case m
+          members = @node.members.map do |member|
+            case member
             when RBS::AST::Members::MethodDefinition
-              Lap::Method.new(m, @indent_level + 1).render
+              Lap::Method.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Class
-              Lap::Class.new(m, @indent_level + 1).render
+              Lap::Class.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Module
-              self.class.new(m, @indent_level + 1).render
+              self.class.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Constant
-              Lap::Constant.new(m, @indent_level + 1).render
+              Lap::Constant.new(member, @indent_level + 1).render
             when RBS::AST::Declarations::Alias
               # no-op: not present in ruby
             else
-              warn "Unsupported member for modules: #{m}"
+              warn "Unsupported member for modules: #{member}"
             end
           end
           "\n#{members.join("\n")}"

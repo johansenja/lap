@@ -22,7 +22,20 @@ module Lap
       Hash[Symbol, RBS::Types::Function::Param] rkw,
       Array[RBS::Types::Function::Param] op,
       Hash[Symbol, RBS::Types::Function::Param] okw
-    ) -> String
+    ) -> (String | nil)
+
+    type commentable = RBS::AST::Declarations::t |
+      RBS::AST::Members::InstanceVariable |
+      RBS::AST::Members::ClassInstanceVariable |
+      RBS::AST::Members::ClassVariable |
+      RBS::AST::Members::Include |
+      RBS::AST::Members::Extend |
+      RBS::AST::Members::Prepend |
+      RBS::AST::Members::MethodDefinition |
+      RBS::AST::Members::AttrReader |
+      RBS::AST::Members::AttrWriter |
+      RBS::AST::Members::AttrAccessor |
+      RBS::AST::Members::Alias
 
     # @!begin
     #   if (comment = node.comment&.string)
@@ -31,7 +44,7 @@ module Lap
     #     output
     #   end
     # @!end
-    def with_comment: (RBS::AST node, String output) -> String
+    def with_comment: (commentable node, String output) -> String
 
     # @!begin
     #   return nil unless node.comment
@@ -48,6 +61,6 @@ module Lap
     #
     #   comment.join
     # @!end
-    def get_comment: (RBS::AST node) -> String
+    def get_comment: (commentable node) -> (String | nil)
   end
 end
