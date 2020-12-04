@@ -2,6 +2,9 @@ module Lap
   class Method
     include Helpers
 
+    @node: RBS::AST::Members::MethodDefinition
+    @indent_level: Integer
+
     # @!begin
     #   @node = node
     #   @indent_level = indent_level

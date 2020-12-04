@@ -23,23 +23,30 @@ module Lap
 
     def return_type(tipe)
       case tipe
-      when RBS::Types::Literal
+      when RBS::Types::Literal, RBS::Types::Proc, RBS::Types::Tuple, RBS::Types::Record
         tipe.inspect
-      when ->(tp) { tp.class.to_s.start_with? "RBS::Types::Bases" }
+      when RBS::Types::Bases::Base
         "# returns #{tipe}"
+      when RBS::Types::ClassSingleton, RBS::Types::ClassInstance
+        "# TODO: return #{tipe.name.name.inspect}"
       else
-        "# TODO: return #{tipe.name.name}"
+        # RBS::Types::Union, RBS::Types::Alias, RBS::Types::Optional, RBS::Types::Intersection, RBS::Types::Interface
+        "# TODO: return #{tipe.inspect}"
       end
     end
 
     def arguments
       @arguments ||= begin
-        type = @node.types.first.type
-        rp = type.required_positionals
-        rkw = type.required_keywords
-        op = type.optional_positionals
-        okw = type.optional_keywords
-        args(rp, rkw, op, okw)
+        if (first_type = @node.types.first)
+          type = first_type.type
+          rp = type.required_positionals
+          rkw = type.required_keywords
+          op = type.optional_positionals
+          okw = type.optional_keywords
+          args(rp, rkw, op, okw)
+        else
+          ""
+        end
       end
     end
 
@@ -63,20 +70,22 @@ module Lap
         end
         if logic.length.positive?
           logic
-        else
-          block = @node.types.first.block
-          return_type = return_type(@node.types.first.type.return_type)
+        elsif (first_type = @node.types.first)
+          block = first_type.block
+          return_type = return_type(first_type.type.return_type)
           yld = if block
-                  bt = block.type
-                  a = args(
-                    bt.required_positionals,
-                    bt.required_keywords,
-                    bt.optional_positionals,
-                    bt.optional_keywords
-                  )
-                  "yield#{a}\n"
-                end
+            bt = block.type
+            a = args(
+              bt.required_positionals,
+              bt.required_keywords,
+              bt.optional_positionals,
+              bt.optional_keywords
+            )
+            "yield#{a}\n"
+          end
           "#{yld}#{return_type}"
+        else
+          "\n"
         end
       end
     end

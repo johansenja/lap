@@ -52,11 +52,10 @@ module Lap
     end
 
     def get_comment(node)
-      return nil unless node.comment
+      nc = node.comment
+      return nil unless nc
 
-      lines = node.comment
-                  .string
-                  .lines
+      lines = nc.string.lines
       comment = []
       lines.each do |line|
         break if line.start_with? "@!begin"
